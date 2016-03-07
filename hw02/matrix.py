@@ -1,25 +1,44 @@
-import math
+from math import *
 
 def make_translate( matrix, x, y, z ):
     c = new_matrix()
     c = ident(c)
-    matrix[0][3] = x
-    matrix[1][3] = y
-    matrix[2][3] = z
-    for 
-    matrix_mult(c,matrix)
+    c[0][3] = x
+    c[1][3] = y
+    c[2][3] = z
+    for mat in range(len(matrix)):
+        matrix[mat] = matrix_mult(c,matrix[mat])
     
 def make_scale( matrix, x, y, z ):
+    c = new_matrix()
+    c = ident(c)
     pass
     
 def make_rotX( matrix, theta ):
+    theta = pi*theta/180
+    c = new_matrix()
+    c = ident(c)
+    c[0][0] = 1
+    c[3][3] = 1
+    c[1][1] = cos(theta)
+    c[1][2] = -1*sin(theta)
+    c[2][1] = sin(theta)
+    c[2][2] = cos(theta)
+    print c
+    for mat in range(len(matrix)):
+        matrix[mat] = matrix_mult(c,matrix[mat])
     
-    pass
-
+    
 def make_rotY( matrix, theta ):
+    theta = pi*theta/180
+    c = new_matrix()
+    c = ident(c)
     pass
 
 def make_rotZ( matrix, theta ):
+    theta = pi*theta/180
+    c = new_matrix()
+    c = ident(c)
     pass
 
 def new_matrix(rows = 4, cols = 4):
@@ -31,7 +50,8 @@ def new_matrix(rows = 4, cols = 4):
     return m
 
 def print_matrix( matrix ):
-    pass
+    for mark in range(len(matrix)):
+        print matrix[mark]
 
 def ident( matrix ):
     matrix = new_matrix()
@@ -45,11 +65,10 @@ def scalar_mult( matrix, x ):
             matrix[tally][mark] *= x;
 
 #m1 * m2 -> m2
-def matrix_mult( m1, m2 ):
-    m3 = new_matrix()
-    for i in range(len(m1)):
-        for j in range(len(m2[0])):
-            for k in range(len(m2)):
-                m3[i][j] += m1[i][k] * m2[k][j]
+def matrix_mult( trans, matt ):
+    m3 = [0,0,0,0]
+    for mark in range(len(trans)):
+        for tally in range(len(trans[0])):
+            m3[mark] = m3[mark] + trans[mark][tally] * matt[tally]
     return m3
 

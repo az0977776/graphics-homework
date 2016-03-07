@@ -3,21 +3,17 @@ from matrix import *
 
 def draw_lines( matrix, screen, color ):
     counter = 0
-    while counter < len(matrix[0])-1:
-        draw_line( screen, matrix[0][counter], matrix[1][counter], matrix[0][counter+1], matrix[1][counter+1], color)
-        counter+=1
+
+    while counter < len(matrix):
+        draw_line( screen, matrix[counter][0], matrix[counter][1], matrix[counter+1][0], matrix[counter+1][1], color)
+        counter+=2 
         
 def add_edge( matrix, x0, y0, z0, x1, y1, z1 ):
-    matrix[0]+=[x0,x1]
-    matrix[1]+=[y0,y1]
-    matrix[2]+=[z0,z1]
-    matrix[3]+=[1,1]
-    
+    matrix += [[x0,y0,z0,1]]
+    matrix += [[x1,y1,z1,1]]
+
 def add_point( matrix, x, y, z=0 ):
-    matrix[0]+=[x]
-    matrix[1]+=[y]
-    matrix[2]+=[z]
-    matrix[3]+=[1]
+    matrix += [[x,y,z,1]]
     
 def draw_line( screen, x0, y0, x1, y1, color ):
     dx = x1 - x0
