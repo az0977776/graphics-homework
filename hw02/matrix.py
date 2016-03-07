@@ -12,19 +12,21 @@ def make_translate( matrix, x, y, z ):
 def make_scale( matrix, x, y, z ):
     c = new_matrix()
     c = ident(c)
-    pass
+    c[0][0] = x
+    c[1][1] = y
+    c[2][2] = z
+    for mat in range(len(matrix)):
+        matrix[mat] = matrix_mult(c,matrix[mat])
     
 def make_rotX( matrix, theta ):
     theta = pi*theta/180
     c = new_matrix()
-    c = ident(c)
     c[0][0] = 1
     c[3][3] = 1
     c[1][1] = cos(theta)
     c[1][2] = -1*sin(theta)
     c[2][1] = sin(theta)
     c[2][2] = cos(theta)
-    print c
     for mat in range(len(matrix)):
         matrix[mat] = matrix_mult(c,matrix[mat])
     
@@ -32,14 +34,26 @@ def make_rotX( matrix, theta ):
 def make_rotY( matrix, theta ):
     theta = pi*theta/180
     c = new_matrix()
-    c = ident(c)
-    pass
+    c[0][0] = cos(theta)
+    c[0][2] = -1*sin(theta)
+    c[1][1] = 1
+    c[2][0] = sin(theta)
+    c[2][2] = cos(theta)
+    c[3][3] = 1
+    for mat in range(len(matrix)):
+        matrix[mat] = matrix_mult(c,matrix[mat])
 
 def make_rotZ( matrix, theta ):
     theta = pi*theta/180
     c = new_matrix()
-    c = ident(c)
-    pass
+    c[0][0] = cos(theta)
+    c[0][1] = -1*sin(theta)
+    c[1][0] = sin(theta)
+    c[1][1] = cos(theta)
+    c[2][2] = 1
+    c[3][3] = 1
+    for mat in range(len(matrix)):
+        matrix[mat] = matrix_mult(c,matrix[mat])
 
 def new_matrix(rows = 4, cols = 4):
     m = []
