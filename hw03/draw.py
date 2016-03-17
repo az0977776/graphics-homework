@@ -7,14 +7,20 @@ def add_circle( matrix, cx, cy, cz, r, step ):
     while (t<1.001):
         x = r * math.cos(2*math.pi*t)
         y = r * math.sin(2*math.pi*t)
-        t += step
         add_point(matrix,cx+x,cy+y,cz)
+        t += step
         x = r * math.cos(2*math.pi*t)
         y = r * math.sin(2*math.pi*t)
         add_point(matrix,cx+x,cy+y,cz)
         
+        
 def add_curve( matrix, x0, y0, x1, y1, x2, y2, x3, y3, step, curve_type ):
-    pass
+    #bezier
+    if (curve_type == 0):
+        pass
+    #hermite
+    else:
+        pass
 
 def draw_lines( matrix, screen, color ):
     if len( matrix ) < 2:
