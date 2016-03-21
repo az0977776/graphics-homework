@@ -21,10 +21,18 @@ def parse_file( fname, points, transform, screen, color ):
             add_edge(points,temp[0],temp[1],temp[2],temp[3],temp[4],temp[5])
             index+=2
         elif (buffer[index] == "circle"):
+            print "drawing circle"
+            temp = parseArgs(buffer[index+1])
+            add_circle(points,temp[0],temp[1],0,temp[3],0.001)
             index+=2
         elif (buffer[index] == "hermite"):
+            print "drawing hermite"
+            temp = parseArgs(buffer[index+1])
+            add_curve(points,temp[0],temp[1],temp[2],temp[3],temp[4],temp[5],temp[6],temp[7],0.001,"h")
             index+=2
         elif (buffer[index] == "bezier"):
+            temp = parseArgs(buffer[index+1])
+            add_curve(points,temp[0],temp[1],temp[2],temp[3],temp[4],temp[5],temp[6],temp[7],0.001,"b")
             index+=2
         elif (buffer[index] == "ident"):
             ident(transform)
@@ -64,9 +72,9 @@ def parse_file( fname, points, transform, screen, color ):
             display(screen)
             index+=1
         elif (buffer[index] == "save"):
-            temp = parseArgs(buffer[index+1])
+            draw_lines(points,screen,color)
             save_ppm(screen,temp[0])
-            index+=2
+            index+=1
         else:
             index+=1
             

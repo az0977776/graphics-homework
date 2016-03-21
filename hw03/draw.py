@@ -15,12 +15,20 @@ def add_circle( matrix, cx, cy, cz, r, step ):
         
         
 def add_curve( matrix, x0, y0, x1, y1, x2, y2, x3, y3, step, curve_type ):
-    #bezier
-    if (curve_type == 0):
-        pass
-    #hermite
+    if curve_type == "b":
+        x = generate_curve_coefs(x0, x3, x1, x2, "b")
+        y = generate_curve_coefs(y0, y3, y1, y2, "b")
     else:
-        pass
+        x = generate_curve_coefs(x0, x2, x1, x3, "h")
+        y = generate_curve_coefs(y0, y2, y1, y3, "h")
+    t = 0
+    while t < 1.001:
+        x_0 = point_calc(x, t)
+        y_0 = point_calc(y, t)
+        t += step
+        x_1 = point_calc(x, t)
+        y__1 = point_calc(y, t)
+        add_edge(points, x_0, y_0, 0, x_1, y_1, 0)
 
 def draw_lines( matrix, screen, color ):
     if len( matrix ) < 2:
