@@ -16,6 +16,7 @@ def parse_file( fname, points, transform, screen, color ):
     index = 0
     while (index < len(buffer)):
         if (buffer[index] == "line"):
+            print "drawing line"
             temp = parseArgs(buffer[index+1])
             add_edge(points,temp[0],temp[1],temp[2],temp[3],temp[4],temp[5])
             index+=2
@@ -29,37 +30,43 @@ def parse_file( fname, points, transform, screen, color ):
             ident(transform)
             index+=1
         elif (buffer[index] == "scale"):
+            print "scaling"
             temp = parseArgs(buffer[index+1])
             transform = make_scale(temp[0],temp[1],temp[2])
             index+=2
         elif (buffer[index] == "translate"):
+            print "translating"
             temp = parseArgs(buffer[index+1])
             transform = make_translate(temp[0],temp[1],temp[2])                
             index+=2
         elif (buffer[index] == "xrotate"):
+            print "xrot"
             temp = parseArgs(buffer[index+1])
             transform = make_rotX(temp[0])
             index+=2
         elif (buffer[index] == "yrotate"):
+            print "yrot"
             temp = parseArgs(buffer[index+1])
             transform = make_rotY(temp[0])
             index+=2
         elif (buffer[index] == "zrotate"):
+            print "zrot"
             temp = parseArgs(buffer[index+1])
             transform = make_rotZ(temp[0])
             index+=2
         elif (buffer[index] == "apply"):
+            print "apply"
             matrix_mult(transform,points)
             index+=1
         elif (buffer[index] == "display"):
+            print "displaying"
             draw_lines(points,screen,color)
             display(screen)
             index+=1
         elif (buffer[index] == "save"):
-            save_extension(screen,'pic.ppm')
-            index+=1
-        elif (buffer[index] == "quit"):
-            index+=1
+            temp = parseArgs(buffer[index+1])
+            save_ppm(screen,temp[0])
+            index+=2
         else:
             index+=1
             

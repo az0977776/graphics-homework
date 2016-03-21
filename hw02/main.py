@@ -29,3 +29,4 @@ for tally in range(100):
         make_translate(matt,-250,-500+tally,0)
 
 display(screen)
+display(screen)
