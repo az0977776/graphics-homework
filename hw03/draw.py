@@ -15,21 +15,18 @@ def add_circle( matrix, cx, cy, cz, r, step ):
         
         
 def add_curve( matrix, x0, y0, x1, y1, x2, y2, x3, y3, step, curve_type ):
-    if curve_type == "b":
-        x = generate_curve_coefs(x0, x3, x1, x2, "b")
-        y = generate_curve_coefs(y0, y3, y1, y2, "b")
+    if curve_type == "h":
+        coco = make_hermite()
     else:
-        x = generate_curve_coefs(x0, x2, x1, x3, "h")
-        y = generate_curve_coefs(y0, y2, y1, y3, "h")
+        coco = make_bezier()
+    trans = generate_curve_coefs([x0,y0], [x1,y1], [x2,y2], [x3,y3], coco)
     t = 0
     while t < 1.001:
-        x_0 = point_calc(x, t)
-        y_0 = point_calc(y, t)
+        x = t*(t*(trans[0][0]*t + trans[0][1]) + trans[0][2]) + trans[0][3]
+        y = t*(t*(trans[1][0]*t + trans[1][1]) + trans[1][2]) + trans[1][3]
         t += step
-        x_1 = point_calc(x, t)
-        y__1 = point_calc(y, t)
-        add_edge(points, x_0, y_0, 0, x_1, y_1, 0)
-
+        add_edge(matrix , x, y, 0, t*(t*(trans[0][0]*t + trans[0][1]) + trans[0][2]) + trans[0][3], t*(t*(trans[1][0]*t + trans[1][1]) + trans[1][2]) + trans[1][3], 0)
+            
 def draw_lines( matrix, screen, color ):
     if len( matrix ) < 2:
         print "Need at least 2 points to draw a line"
