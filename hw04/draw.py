@@ -31,17 +31,61 @@ def add_box( points, x, y, z, width, height, depth ):
     add_edge(points, vertices[7][0], vertices[7][1], vertices[7][2], vertices[4][0], vertices[4][1], vertices[4][2])
     
 def add_sphere( points, cx, cy, cz, r, step ):
-    #for mark in range(
-    return 0
+    s = 0
+    t = 0
+    while s<=1.001:
+        while t<=1.001:
+            x = r*math.cos(math.pi*t)
+            y = r*math.sin(math.pi*t)*math.cos(2*math.pi*s)
+            z = r*math.sin(math.pi*t)*math.sin(2*math.pi*s)
+            add_point(points,cx+x,cy+y,cz+z)
+            t += step
+            x = r*math.cos(math.pi*t)
+            y = r*math.sin(math.pi*t)*math.cos(2*math.pi*s)
+            z = r*math.sin(math.pi*t)*math.sin(2*math.pi*s)
+            add_point(points,cx+x,cy+y,cz+z)
+        s += step
 
 def generate_sphere( points, cx, cy, cz, r, step ):
-    return 0
+    s = 0
+    t = 0
+    while s<=1.001:
+        while t<=1.001:
+            x = r*math.cos(math.pi*t)
+            y = r*math.sin(math.pi*t)*math.cos(2*math.pi*s)
+            z = r*math.sin(math.pi*t)*math.sin(2*math.pi*s)
+            add_point(points,cx+x,cy+y,cz+z)
+            t += step
+        s += step
 
 def add_torus( points, cx, cy, cz, r0, r1, step ):
-    return 0
+    #r0 is the radius of the circle and r1 is the distance from the center of the torus to the center of the circle
+    s = 0
+    t = 0
+    while s<1.001:
+        while t<=1.001:
+            x = r0*math.cos(2*math.pi*t)
+            y = math.cos(2*math.pi*s)*(r0*math.sin(2*math.pi*t)+r1)
+            z = math.sin(2*math.pi*s)*(r0*math.sin(2*math.pi*t)+r1)
+            add_point(points,cx+x,cy+y,cz+z)
+            t += step
+            x = r0*math.cos(2*math.pi*t)
+            y = math.cos(2*math.pi*s)*(r0*math.sin(2*math.pi*t)+r1)
+            z = math.sin(2*math.pi*s)*(r0*math.sin(2*math.pi*t)+r1)
+            add_point(points,cx+x,cy+y,cz+z)
+        s += step
 
 def generate_torus( points, cx, cy, cz, r0, r1, step ):
-    return 0
+    s = 0
+    t = 0
+    while s<1.001:
+        while t<=1.001:
+            x = r0*math.cos(2*math.pi*t)
+            y = math.cos(2*math.pi*s)*(r0*math.sin(2*math.pi*t)+r1)
+            z = math.sin(2*math.pi*s)*(r0*math.sin(2*math.pi*t)+r1)
+            add_point(points,cx+x,cy+y,cz+z)
+            t += step
+        s += step
 
 
 def add_circle( points, cx, cy, cz, r, step ):
