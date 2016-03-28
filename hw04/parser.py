@@ -84,6 +84,8 @@ def parse_file( f, points, transform, screen, color ):
                 save_extension( screen, commands[c].strip() )
             elif cmd == 'quit':
                 return    
+            elif cmd == clear:
+                points = []
             else:
                 print 'Invalid command: ' + cmd
         c+= 1

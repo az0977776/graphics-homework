@@ -31,61 +31,43 @@ def add_box( points, x, y, z, width, height, depth ):
     add_edge(points, vertices[7][0], vertices[7][1], vertices[7][2], vertices[4][0], vertices[4][1], vertices[4][2])
     
 def add_sphere( points, cx, cy, cz, r, step ):
-    s = 0
-    t = 0
-    while s<=1.001:
-        while t<=1.001:
-            x = r*math.cos(math.pi*t)
-            y = r*math.sin(math.pi*t)*math.cos(2*math.pi*s)
-            z = r*math.sin(math.pi*t)*math.sin(2*math.pi*s)
-            add_point(points,cx+x,cy+y,cz+z)
-            t += step
-            x = r*math.cos(math.pi*t)
-            y = r*math.sin(math.pi*t)*math.cos(2*math.pi*s)
-            z = r*math.sin(math.pi*t)*math.sin(2*math.pi*s)
-            add_point(points,cx+x,cy+y,cz+z)
-        s += step
+    sphere = []
+    generate_sphere(sphere, cx, cy, cz, r, step)
+    for mark in sphere:
+        add_edge(points, mark[0], mark[1], mark[2], mark[0], mark[1], mark[2])
 
 def generate_sphere( points, cx, cy, cz, r, step ):
-    s = 0
+    p = 0
     t = 0
-    while s<=1.001:
+    while p<=1.001:
         while t<=1.001:
             x = r*math.cos(math.pi*t)
-            y = r*math.sin(math.pi*t)*math.cos(2*math.pi*s)
-            z = r*math.sin(math.pi*t)*math.sin(2*math.pi*s)
+            y = r*math.sin(math.pi*t)*math.cos(2*math.pi*p)
+            z = r*math.sin(math.pi*t)*math.sin(2*math.pi*p)
             add_point(points,cx+x,cy+y,cz+z)
             t += step
-        s += step
+        t = 0
+        p += step
 
 def add_torus( points, cx, cy, cz, r0, r1, step ):
     #r0 is the radius of the circle and r1 is the distance from the center of the torus to the center of the circle
-    s = 0
-    t = 0
-    while s<1.001:
-        while t<=1.001:
-            x = r0*math.cos(2*math.pi*t)
-            y = math.cos(2*math.pi*s)*(r0*math.sin(2*math.pi*t)+r1)
-            z = math.sin(2*math.pi*s)*(r0*math.sin(2*math.pi*t)+r1)
-            add_point(points,cx+x,cy+y,cz+z)
-            t += step
-            x = r0*math.cos(2*math.pi*t)
-            y = math.cos(2*math.pi*s)*(r0*math.sin(2*math.pi*t)+r1)
-            z = math.sin(2*math.pi*s)*(r0*math.sin(2*math.pi*t)+r1)
-            add_point(points,cx+x,cy+y,cz+z)
-        s += step
+    torus = []
+    generate_torus(torus, cx, cy, cz, r0, r1, step)
+    for mark in torus:
+        add_edge(points, mark[0], mark[1], mark[2], mark[0], mark[1], mark[2])
 
 def generate_torus( points, cx, cy, cz, r0, r1, step ):
-    s = 0
+    p = 0
     t = 0
-    while s<1.001:
+    while p<1.001:
         while t<=1.001:
             x = r0*math.cos(2*math.pi*t)
-            y = math.cos(2*math.pi*s)*(r0*math.sin(2*math.pi*t)+r1)
-            z = math.sin(2*math.pi*s)*(r0*math.sin(2*math.pi*t)+r1)
+            y = math.cos(2*math.pi*p)*(r0*math.sin(2*math.pi*t)+r1)
+            z = math.sin(2*math.pi*p)*(r0*math.sin(2*math.pi*t)+r1)
             add_point(points,cx+x,cy+y,cz+z)
             t += step
-        s += step
+        t = 0
+        p += step
 
 
 def add_circle( points, cx, cy, cz, r, step ):
