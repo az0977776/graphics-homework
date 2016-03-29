@@ -47,13 +47,13 @@ def parse_file( f, points, transform, screen, color ):
                     
                 #angle = args[0] * ( math.pi / 180 )
                 elif cmd == 'xrotate':
-                    r = make_rotX( angle )
+                    r = make_rotX( args[0] )
                     matrix_mult( r, transform )
                 elif cmd == 'yrotate':
-                    r = make_rotY( angle )
+                    r = make_rotY( args[0] )
                     matrix_mult( r, transform )
                 elif cmd == 'zrotate':
-                    r = make_rotZ( angle )
+                    r = make_rotZ( args[0] )
                     matrix_mult( r, transform )
 
                 elif cmd == 'box':
@@ -84,7 +84,7 @@ def parse_file( f, points, transform, screen, color ):
                 save_extension( screen, commands[c].strip() )
             elif cmd == 'quit':
                 return    
-            elif cmd == clear:
+            elif cmd == 'clear':
                 points = []
             else:
                 print 'Invalid command: ' + cmd
