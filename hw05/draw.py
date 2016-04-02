@@ -14,7 +14,7 @@ def draw_polygons( points, screen, color ):
         print "Need at least 3 points to draw a triangle"
         
     p = 0
-    while p < len( points ) - 1:
+    while p < len( points ) - 2:
         draw_line( screen, points[p][0], points[p][1],
                    points[p+1][0], points[p+1][1], color )
         draw_line( screen, points[p+1][0], points[p+1][1],
@@ -26,52 +26,52 @@ def draw_polygons( points, screen, color ):
 def add_box( points, x, y, z, width, height, depth ):
     x1 = x + width
     y1 = y + height
-    z1 = z - depth
+    z1 = z + depth
 
     add_polygon(points,
+                x1,y,z,
                 x,y,z,
-                x,y1,z,
-                x1,y,z)
+                x,y1,z)
     add_polygon(points,
                 x1,y,z,
                 x,y1,z,
                 x1,y1,z)
     add_polygon(points,
+                x1,y,z1,
                 x1,y,z,
-                x1,y1,z,
-                x1,y,z1)
-    add_polygon(points,
-                x1,y1,z,
-                x1,y1,z1,
-                x1,y,z1)
+                x1,y1,z)
     add_polygon(points,
                 x1,y,z1,
-                x1,y1,z1,
-                x,y,z1)
+                x1,y1,z,
+                x1,y1,z1)
+    add_polygon(points,
+                x,y,z1,
+                x1,y,z1,
+                x1,y1,z1)
     add_polygon(points,
                 x,y,z1,
                 x1,y1,z1,
                 x,y1,z1)
     add_polygon(points,
+                x,y,z,
                 x,y,z1,
-                x,y1,z1,
-                x,y,z)
+                x,y1,z1)
     add_polygon(points,
                 x,y,z,
                 x,y1,z1,
                 x,y1,z)
     add_polygon(points,
+                x1,y,z1,
                 x,y,z1,
-                x,y,z,
-                x1,y,z1)
+                x,y,z)
     add_polygon(points,
                 x1,y,z1,
                 x,y,z,
                 x1,y,z)
     add_polygon(points,
+                x1,y1,z,
                 x,y1,z,
-                x,y1,z1,
-                x1,y1,z)
+                x,y1,z1)
     add_polygon(points,
                 x1,y1,z,
                 x,y1,z1,
