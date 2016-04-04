@@ -10,12 +10,14 @@ color = [ 0, 255, 0 ]
 edges = []
 transform = new_matrix()
 
-add_sphere(edges,100,100,0,50,100)
+add_sphere(edges,100,100,0,50,5)
+#print edges
 
-matrix_mult(make_rotX(45.0/180*pi),edges)
-matrix_mult(make_rotY(45.0/180*pi),edges)
+#matrix_mult(make_rotX(45.0/180*pi),edges)
+#matrix_mult(make_rotY(45.0/180*pi),edges)
 
-matrix_mult(make_translate(250,250,0),edges)
+matrix_mult(make_scale(3,3,3),edges)
+matrix_mult(make_translate(100,0,0),edges)
 
 #print_matrix(edges)
 draw_polygons(edges,screen,color)
