@@ -5,6 +5,7 @@ import math
 MAX_STEPS = 100
 
 def add_polygon( points, x0, y0, z0, x1, y1, z1, x2, y2, z2 ):
+    
     points.append([x0,y0,z0,1])
     points.append([x1,y1,z1,1])
     points.append([x2,y2,z2,1])
@@ -15,14 +16,37 @@ def draw_polygons( points, screen, color ):
         
     p = 0
     while p < len( points ) - 2:
-        draw_line( screen, points[p][0], points[p][1],
-                   points[p+1][0], points[p+1][1], color )
-        draw_line( screen, points[p+1][0], points[p+1][1],
-                   points[p+2][0], points[p+2][1], color )
-        draw_line( screen, points[p+2][0], points[p+2][1],
-                   points[p][0], points[p][1], color )        
+        s1 = [points[p+2][0]-points[p+1][0],
+              points[p+2][1]-points[p+1][1],
+              points[p+2][2]-points[p+1][2]]
+        s2 = [points[p][0]-points[p+1][0],
+              points[p][1]-points[p+1][1],
+              points[p][2]-points[p+1][2]]
+
+        if check_surface(s1, s2):
+            draw_line( screen, points[p][0], points[p][1],
+                       points[p+1][0], points[p+1][1], color )
+            draw_line( screen, points[p+1][0], points[p+1][1],
+                       points[p+2][0], points[p+2][1], color )
+            draw_line( screen, points[p+2][0], points[p+2][1],
+                       points[p][0], points[p][1], color )        
         p+= 3
 
+def cross_product(a, b):
+    cross = []
+    cross.append(a[1]*b[2] - a[2]*b[1])
+    cross.append(a[2]*b[0] - a[0]*b[2])
+    cross.append(a[0]*b[1] - a[1]*b[0])
+    return cross
+
+def check_surface(s1, s2):
+    surface = cross_product(s1, s2)
+    view = [0, 0, -1]
+    
+    if surface[2]*view[2] < 0:
+        return True
+    return False
+        
 def add_box( points, x, y, z, width, height, depth ):
     x1 = x + width
     y1 = y + height
@@ -85,7 +109,7 @@ def add_sphere( points, cx, cy, cz, r, step ):
 
     generate_sphere( temp, cx, cy, cz, r, step )
 
-    print len(temp)
+    #print len(temp)
     lat = 0
     lat_stop = num_steps
     longt = 0
@@ -97,6 +121,7 @@ def add_sphere( points, cx, cy, cz, r, step ):
             
             index = lat * num_steps + longt
             #print index
+
             add_polygon(points,
                         temp[index][0],
                         temp[index][1],
@@ -107,7 +132,7 @@ def add_sphere( points, cx, cy, cz, r, step ):
                         temp[(index + num_steps)%len(temp)][0],
                         temp[(index + num_steps)%len(temp)][1],
                         temp[(index + num_steps)%len(temp)][2])
-                
+
             add_polygon(points,
                         temp[index][0],
                         temp[index][1],
