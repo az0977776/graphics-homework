@@ -188,6 +188,9 @@ def add_torus( points, cx, cy, cz, r0, r1, step ):
             
             index = lat * num_steps + longt
             
+            if longt == longt_stop - 1:
+                index -= 1
+                
             add_polygon( points, 
                          temp[index][0],
                          temp[index][1],
