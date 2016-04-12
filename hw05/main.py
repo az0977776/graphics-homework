@@ -20,19 +20,17 @@ else:
     torus = []
     box = []
     
-    add_sphere(sphere,50,0,-200,40,4)
-    add_sphere(sphere,450,0,-200,40,4)
-    add_sphere(sphere,250,0,0,40,4)
-    add_sphere(sphere,50,0,200,40,4)
-    add_sphere(sphere,450,0,200,40,4)
+    add_sphere(sphere,75,0,-175,40,4)
+    add_sphere(sphere,425,0,-175,40,4)
+    add_sphere(sphere,250,0,0,50,4)
+    add_sphere(sphere,75,0,175,40,4)
+    add_sphere(sphere,425,0,175,40,4)
 
     matrix_mult(make_rotX(90*pi/180.0),sphere)
     matrix_mult(make_translate(0,250,0),sphere)
 
-    add_torus(torus,250,250,0,10,40,4)
-    add_torus(torus,250,250,0,10,70,4)
-    add_torus(torus,250,250,0,10,100,4)
-    
+    add_torus(torus,250,250,0,20,70,4)
+        
     matrix_mult(make_rotX(90*pi/180.0),torus)
     matrix_mult(make_scale(2,2,1),torus)
     matrix_mult(make_translate(-250,250,0),torus)
