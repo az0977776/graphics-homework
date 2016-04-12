@@ -16,31 +16,32 @@ if len(sys.argv) == 2:
     f.close()
 
 else:
-    # #add_sphere(edges,250,250,0,40,2)
-    add_torus(edges,250,250,0,25,60,5)
-    
     sphere = []
     torus = []
     box = []
     
-    # add_sphere(sphere,20,100,0,15,10)
-    # add_sphere(sphere,150,100,0,20,10)
-    # add_sphere(sphere,280,100,0,15,10)
+    add_sphere(sphere,50,0,-200,40,4)
+    add_sphere(sphere,450,0,-200,40,4)
+    add_sphere(sphere,250,0,0,40,4)
+    add_sphere(sphere,50,0,200,40,4)
+    add_sphere(sphere,450,0,200,40,4)
+
+    matrix_mult(make_rotX(90*pi/180.0),sphere)
+    matrix_mult(make_translate(0,250,0),sphere)
+
+    add_torus(torus,250,250,0,10,40,4)
+    add_torus(torus,250,250,0,10,70,4)
+    add_torus(torus,250,250,0,10,100,4)
     
-    # add_torus(torus,20,100,0,12,75,10)
-    # add_torus(torus,150,100,0,15,100,10)
-    # add_torus(torus,280,100,0,12,75,10)
+    matrix_mult(make_rotX(90*pi/180.0),torus)
+    matrix_mult(make_scale(2,2,1),torus)
+    matrix_mult(make_translate(-250,250,0),torus)
     
     donut = []
     donut += torus
     donut += sphere
-    
-    matrix_mult(make_rotX(15*pi/180.0),edges)
 
-    matrix_mult(make_scale(2,2,2),edges)
-    matrix_mult(make_translate(-200,-100,0),edges)
-    
-    draw_polygons(edges,screen,color)
+    draw_polygons(donut,screen,color)
     
     display(screen)
     

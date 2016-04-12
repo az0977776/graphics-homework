@@ -187,7 +187,7 @@ def add_torus( points, cx, cy, cz, r0, r1, step ):
         while longt < longt_stop:
             
             index = lat * num_steps + longt
-            
+
             if longt == longt_stop - 1:
                 index -= 1
                 
