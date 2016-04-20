@@ -1,14 +1,14 @@
 from display import *
 from matrix import *
 from draw import *
+import sys
+import math
 
 ARG_COMMANDS = [ 'line', 'scale', 'translate', 'xrotate', 'yrotate', 'zrotate', 'circle', 'bezier', 'hermite', 'sphere', 'box', 'torus']
 
 def parse_file( f, points, transform, screen, color ):
 
     stack = []
-    polygon = []
-    edge = []
     
     n = new_matrix()
     ident(n)
@@ -28,58 +28,53 @@ def parse_file( f, points, transform, screen, color ):
                 i+= 1
 
             if cmd == 'line':
-                add_edge( edge, args[0], args[1], args[2], args[3], args[4], args[5] )
-                matrix_mult( edge, stack[-1])
-                draw_lines( edge, screen, color)
                 edge = []
+                add_edge( edge, args[0], args[1], args[2], args[3], args[4], args[5] )
+                matrix_mult( stack[-1], edge)
+                draw_lines( edge, screen, color)
                 
             elif cmd == 'circle':
-                add_circle( edge, args[0], args[1], 0, args[2], .01 )
-                matrix_mult( edge, stack[-1])
-                draw_lines( edge, screen, color)
                 edge = []
+                add_circle( edge, args[0], args[1], 0, args[2], .01 )
+                matrix_mult( stack[-1], edge)
+                draw_lines( edge, screen, color)
                 
             elif cmd == 'bezier':
-                add_curve( edge, args[0], args[1], args[2], args[3], args[4], args[5], args[6], args[7], .01, 'bezier' )
-                matrix_mult( edge, stack[-1])
-                draw_lines( edge, screen, color)
                 edge = []
+                add_curve( edge, args[0], args[1], args[2], args[3], args[4], args[5], args[6], args[7], .01, 'bezier' )
+                matrix_mult( stack[-1], edge)
+                draw_lines( edge, screen, color)
                 
             elif cmd == 'hermite':
-                add_curve( edge, args[0], args[1], args[2], args[3], args[4], args[5], args[6], args[7], .01, 'hermite' )
-                matrix_mult( edge, stack[-1])
-                draw_lines( edge, screen, color)
                 edge = []
+                add_curve( edge, args[0], args[1], args[2], args[3], args[4], args[5], args[6], args[7], .01, 'hermite' )
+                matrix_mult( stack[-1], edge)
+                draw_lines( edge, screen, color)
                 
             elif cmd == 'sphere':
-                add_sphere( polygon, args[0], args[1], 0, args[2], 5 )
-                matrix_mult( polygon, stack[-1])
-                draw_polygons( polygon, screen, color)
                 polygon = []
+                add_sphere( polygon, args[0], args[1], 0, args[2], 5 )
+                matrix_mult( stack[-1], polygon)
+                draw_polygons( polygon, screen, color)
                 
             elif cmd == 'torus':
-                add_torus( polygon, args[0], args[1], 0, args[2], args[3], 5 )
-                matrix_mult( polygon, stack[-1])
-                draw_polygons( polygon, screen, color)
                 polygon = []
+                add_torus( polygon, args[0], args[1], 0, args[2], args[3], 5 )
+                matrix_mult( stack[-1], polygon)
+                draw_polygons( polygon, screen, color)
                 
             elif cmd == 'box':
+                polygon = []
                 add_box( polygon, args[0], args[1], args[2], args[3], args[4], args[5] )
                 matrix_mult( stack[-1], polygon)
                 draw_polygons( polygon, screen, color)
-                #display(screen)
-                polygon = []
 
             elif cmd == 'scale':
                 s = make_scale( args[0], args[1], args[2] )
-                matrix_mult( s, stack[-1] )
+                matrix_mult( s, stack[-1])
 
             elif cmd == 'translate':
                 t = make_translate( args[0], args[1], args[2] )
-                print 't'
-                print t
-                print 'stack[-1]'
-                print stack[-1]
                 matrix_mult( t, stack[-1] )
 
             else:
@@ -99,10 +94,10 @@ def parse_file( f, points, transform, screen, color ):
             stack.pop()
             
         elif cmd == 'ident':
-            ident( transform )
+            ident( stack[-1] )
             
-        #elif cmd == 'apply':
-        #    matrix_mult( transform, points )
+        elif cmd == 'apply':
+            matrix_mult( stack[-1], points )
 
         elif cmd == 'clear':
             points = []
@@ -122,3 +117,14 @@ def parse_file( f, points, transform, screen, color ):
         elif cmd[0] != '#':
             print 'Invalid command: ' + cmd
         c+= 1
+
+screen = new_screen()
+color = [ 0, 255, 0 ]
+edges = []
+transform = new_matrix()
+
+if len(sys.argv) == 2:
+    f = open(sys.argv[1])
+
+    parse_file( f, edges, transform, screen, color )
+    f.close()
