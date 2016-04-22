@@ -71,11 +71,13 @@ def parse_file( f, points, transform, screen, color ):
 
             elif cmd == 'scale':
                 s = make_scale( args[0], args[1], args[2] )
-                matrix_mult( s, stack[-1])
+                matrix_mult( stack[-1], s)
+                stack[-1] = s
 
             elif cmd == 'translate':
                 t = make_translate( args[0], args[1], args[2] )
-                matrix_mult( t, stack[-1] )
+                matrix_mult( stack[-1], t)
+                stack[-1] = t
 
             else:
                 angle = args[0] * ( math.pi / 180 )
@@ -85,7 +87,8 @@ def parse_file( f, points, transform, screen, color ):
                     r = make_rotY( angle )
                 elif cmd == 'zrotate':
                     r = make_rotZ( angle )
-                matrix_mult( r, stack[-1] )
+                matrix_mult( stack[-1] , r)
+                stack[-1] = r
 
         elif cmd == 'push':
             stack.append(stack[-1])
