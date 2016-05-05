@@ -1,4 +1,5 @@
-"""========== script.py ==========
+"""
+========== script.py ==========
 
   This is the only file you need to modify in order
   to get a working mdl project (for now).
@@ -45,14 +46,16 @@
   display: view the image live
   
   jdyrlandweaver
-  ========================="""
-
-
+  =========================
+"""
 
 import mdl
 from display import *
 from matrix import *
 from draw import *
+
+num_frames = 0
+basename = ""
 
 
 """======== first_pass( commands, symbols ) ==========
@@ -73,7 +76,22 @@ from draw import *
   jdyrlandweaver
   ==================== """
 def first_pass( commands ):
-        
+    frame_exist = false
+    basename_exist = false
+    vary_exist = false
+    for command in commands:
+        if command[0] == "frames":
+            num_frames = command[1]
+            frame_exist = true
+        if command[0] == "basename":
+            basename = command[1]
+            basename_exist = true
+        if command[0] == "vary":
+            
+            
+            
+            
+            
 
 """======== second_pass( commands ) ==========
 
@@ -92,8 +110,9 @@ def first_pass( commands ):
   dictionary corresponding to the given knob with the
   appropirate value. 
   ===================="""
-def second_pass( commands, num_frames ):
 
+def second_pass( commands, num_frames ):
+    pass
 
 def run(filename):
     """
@@ -104,7 +123,7 @@ def run(filename):
     ident( tmp )
 
     p = mdl.parseFile(filename)
-
+    
     if p:
         (commands, symbols) = p
     else:
@@ -112,8 +131,12 @@ def run(filename):
         return
         
     stack = [ tmp ]
-    screen = new_screen()    
-        
+    screen = new_screen()
+    
+
+    first_pass(commands)
+    
+    
     for command in commands:
         if command[0] == "pop":
             stack.pop()
