@@ -56,6 +56,7 @@ from draw import *
 
 num_frames = 0
 basename = ""
+knobs = []
 
 
 """======== first_pass( commands, symbols ) ==========
@@ -76,27 +77,29 @@ basename = ""
   jdyrlandweaver
   ==================== """
 def first_pass( commands ):
-    frame_exist = false
-    basename_exist = false
-    vary_exist = false
+    frame_exist = False
+    basename_exist = False
+    vary_exist = False
     for command in commands:
         if command[0] == "frames":
             num_frames = command[1]
-            frame_exist = true
+            frame_exist = True
         if command[0] == "basename":
             basename = command[1]
-            basename_exist = true
+            basename_exist = True
         if command[0] == "vary":
-            
-            
-            
-            
+            vary_exist = True
+    if vary_exist and not frame_exist:
+        exit()
+    if frame_exist and not basename_exist:
+        basename = "wooopy"        
+        print "wooopy di do"
             
 
 """======== second_pass( commands ) ==========
 
   In order to set the knobs for animation, we need to keep
-  a seaprate value for each knob for each frame. We can do
+  a seprate value for each knob for each frame. We can do
   this by using an array of dictionaries. Each array index
   will correspond to a frame (eg. knobs[0] would be the first
   frame, knobs[2] would be the 3rd frame and so on).
@@ -112,6 +115,10 @@ def first_pass( commands ):
   ===================="""
 
 def second_pass( commands, num_frames ):
+    for command in commands:
+        if command[0] == "vary":
+            for knob in knobs:
+                
     pass
 
 def run(filename):
