@@ -76,7 +76,9 @@ knobs = []
 
   jdyrlandweaver
   ==================== """
+
 def first_pass( commands ):
+    global num_frames
     frame_exist = False
     basename_exist = False
     vary_exist = False
@@ -94,7 +96,7 @@ def first_pass( commands ):
     if frame_exist and not basename_exist:
         basename = "wooopy"        
         print "wooopy di do"
-            
+        
 
 """======== second_pass( commands ) ==========
 
@@ -115,11 +117,20 @@ def first_pass( commands ):
   ===================="""
 
 def second_pass( commands, num_frames ):
+    for frame in range(num_frames):
+        knobs.append({})
     for command in commands:
+        print command
         if command[0] == "vary":
-            for knob in knobs:
-                
-    pass
+            for frame in range(num_frames):
+                if frame < command[2]:
+                    knobs[frame][command[1]] = command[4]
+                elif frame > command[3]:
+                    knobs[frame][command[1]] = command[5]
+                else:
+                    knobs[frame][command[1]] = 1.0 * (frame - command[2]) / (command[3] - command[2]) * (command[5]-command[4])
+    print knobs
+                    
 
 def run(filename):
     """
@@ -136,13 +147,13 @@ def run(filename):
     else:
         print "Parsing failed."
         return
-        
+    
     stack = [ tmp ]
     screen = new_screen()
     
 
     first_pass(commands)
-    
+    second_pass(commands, num_frames)
     
     for command in commands:
         if command[0] == "pop":
@@ -205,7 +216,7 @@ def run(filename):
             xval = command[1]
             yval = command[2]
             zval = command[3]
-                    
+            
             t = make_translate(xval, yval, zval)
             matrix_mult( stack[-1], t )
             stack[-1] = t
